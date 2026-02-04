@@ -1,21 +1,15 @@
 package com.example.chatbot.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity(name = "type")
-@Table(name = "type")
-public class Type {
-    @Id
-    @Column(name = "type_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long typeId;
+public enum Type {
+    USER("일반 사용자"),
+    ADMIN("관리자");
 
-    @Column(name = "name", length = 255, nullable = false)
-    private String name;
+    private final String label;
+
+    private Type(String label) {
+        this.label = label;
+    }
 }
