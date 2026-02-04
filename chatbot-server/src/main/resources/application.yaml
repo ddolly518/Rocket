@@ -1,3 +1,12 @@
 spring:
   application:
     name: chatbot
+  profiles:
+    # 활성화할 프로필 설정 (기본값: dev)
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  jpa:
+    # JPA 세션을 컨트롤러 이후에 닫음
+    open-in-view: false
+# 서버 포트
+server:
+  port: 8080
