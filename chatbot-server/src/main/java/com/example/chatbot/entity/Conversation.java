@@ -10,32 +10,31 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "users")
-@Table(name = "users")
+@Entity(name = "conversations")
+@Table(name = "conversations")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class Conversation {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "conversation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "password", length = 255, nullable = false)
-    private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "email", length = 255, nullable = false, unique = true)
-    private String email;
+    @Column(name = "title", length = 255, nullable = false)
+    private String title;
 
-    @Column(name = "nickname", length = 255, nullable = false)
-    private String nickname;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Type type;
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    private List<Message> messages = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)

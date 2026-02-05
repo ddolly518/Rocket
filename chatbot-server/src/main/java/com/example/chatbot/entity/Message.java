@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -15,33 +14,26 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "users")
-@Table(name = "users")
+@Entity(name = "messages")
+@Table(name = "messages")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class Message {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "message_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "password", length = 255, nullable = false)
-    private String password;
+    @Column(name = "role", length = 255, nullable = false)
+    private String role;
 
-    @Column(name = "email", length = 255, nullable = false, unique = true)
-    private String email;
+    @Column(name = "content", length = 255, nullable = false)
+    private String content;
 
-    @Column(name = "nickname", length = 255, nullable = false)
-    private String nickname;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Type type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
 
     @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime updatedAt;
 }
