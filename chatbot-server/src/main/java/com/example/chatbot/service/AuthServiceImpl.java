@@ -118,4 +118,26 @@ public class AuthServiceImpl implements AuthService {
         }
         return null;
     }
+
+    @Override
+    public void logout(HttpServletResponse response) {
+        // accessToken 쿠키 삭제
+        Cookie accessToken = new Cookie("accessToken", null);
+        accessToken.setHttpOnly(true);
+        accessToken.setSecure(true); // https 환경이면 true
+        accessToken.setPath("/");
+        accessToken.setMaxAge(0); // 만료시간 0으로 설정 → 삭제
+        accessToken.setAttribute("SameSite", "Strict");
+
+        // refreshToken 쿠키 삭제
+        Cookie refreshToken = new Cookie("refreshToken", null);
+        refreshToken.setHttpOnly(true);
+        refreshToken.setSecure(true);
+        refreshToken.setPath("/auth/refresh");
+        refreshToken.setMaxAge(0);
+        refreshToken.setAttribute("SameSite", "Strict");
+
+        response.addCookie(accessToken);
+        response.addCookie(refreshToken);
+    }
 }

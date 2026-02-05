@@ -11,4 +11,5 @@ public interface AuthService {
     SignupResponse signup(SignupRequest request);
     LoginResponse login(LoginRequest request, HttpServletResponse httpResponse);
     void reissue(HttpServletRequest request, HttpServletResponse response);
+    void logout(HttpServletResponse response);
 }
