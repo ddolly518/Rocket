@@ -1,0 +1,121 @@
+package com.example.chatbot.service;
+
+import com.example.chatbot.dto.LoginRequest;
+import com.example.chatbot.dto.LoginResponse;
+import com.example.chatbot.dto.SignupRequest;
+import com.example.chatbot.dto.SignupResponse;
+import com.example.chatbot.entity.Type;
+import com.example.chatbot.entity.User;
+import com.example.chatbot.exception.CustomErrorCode;
+import com.example.chatbot.exception.CustomException;
+import com.example.chatbot.repository.UserRepository;
+import com.example.chatbot.security.JwtTokenProvider;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
+
+    @Override
+    public SignupResponse signup(SignupRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new CustomException(CustomErrorCode.EMAIL_ALREADY_EXISTS);
+        }
+
+        String encodedPassword = passwordEncoder.encode(request.password());
+        Type type = Type.fromCode(request.type());
+
+        User user = User.builder()
+                .email(request.email())
+                .password(encodedPassword)
+                .nickname(request.nickname())
+                .type(type)
+                .build();
+
+        userRepository.save(user);
+        return new SignupResponse(request.email(), request.nickname(), "회원가입에 성공했습니다.");
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest request, HttpServletResponse httpResponse) {
+        // 회원 조회
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
+
+        // 비밀번호 검증
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
+        }
+
+        // JWT 생성
+        String accessToken = tokenProvider.createAccessToken(user.getEmail(), user.getType());
+        String refreshToken = tokenProvider.createRefreshToken(user.getEmail());
+
+        // 쿠키 설정
+        httpResponse.addCookie(createAccessTokenCookie(accessToken));
+        httpResponse.addCookie(createRefreshTokenCookie(refreshToken));
+
+        return new LoginResponse(user.getEmail(), user.getNickname(), "로그인에 성공했습니다.");
+    }
+
+    private Cookie createAccessTokenCookie(String token) {
+        Cookie cookie = new Cookie("accessToken", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // https 환경
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 30); // 30분
+        cookie.setAttribute("SameSite", "Strict");
+        return cookie;
+    }
+
+    private Cookie createRefreshTokenCookie(String token) {
+        Cookie cookie = new Cookie("refreshToken", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/auth/refresh");
+        cookie.setMaxAge(60 * 60 * 24 * 14); // 14일
+        cookie.setAttribute("SameSite", "Strict");
+        return cookie;
+    }
+
+    @Override
+    public void reissue(HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = extractRefreshToken(request);
+
+        if (refreshToken == null ||
+                !tokenProvider.validateToken(refreshToken) ||
+                !tokenProvider.isRefreshToken(refreshToken)) {
+            throw new CustomException(CustomErrorCode.INVALID_TOKEN);
+        }
+
+        String email = tokenProvider.getEmail(refreshToken);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
+
+        String newAccessToken =
+                tokenProvider.createAccessToken(user.getEmail(), user.getType());
+
+        response.addCookie(createAccessTokenCookie(newAccessToken));
+    }
+
+    private String extractRefreshToken(HttpServletRequest request) {
+        if (request.getCookies() == null) return null;
+
+        for (Cookie cookie : request.getCookies()) {
+            if ("refreshToken".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+    }
+}

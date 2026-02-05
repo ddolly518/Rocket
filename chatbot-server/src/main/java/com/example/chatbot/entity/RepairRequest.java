@@ -28,11 +28,11 @@ public class RepairRequest {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 50)
+    @Column(nullable = false)
     private RepairStatus status;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "product", nullable = false, length = 50)
+    @Column(nullable = false)
     private RepairProduct product;
 
     @CreationTimestamp
