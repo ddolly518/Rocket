@@ -7,6 +7,10 @@ spring:
   jpa:
     # JPA 세션을 컨트롤러 이후에 닫음
     open-in-view: false
+  openai:
+    api-key: ${OPENAI_API_KEY}
+    api-url: https://api.openai.com/v1/chat/completions
+    model: gpt-3.5-turbo
 
 jwt:
   secret: ${SECRET_KEY:this-is-a-very-long-secret-key-for-jwt-hs256-123456}

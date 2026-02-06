@@ -23,8 +23,9 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role", length = 255, nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Column(name = "content", length = 255, nullable = false)
     private String content;
