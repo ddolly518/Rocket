@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 
 // API 문서 자동 생성
 @Configuration
@@ -19,11 +20,16 @@ public class SwaggerConfig {
                         .title("AI Chatbot API")
                         .description("GPT 기반 챗봇 API 서버")
                         .version("1.0.0"))
-                .addSecurityItem(new SecurityRequirement().addList("ApiKey"))
-                .components(new Components()
-                        .addSecuritySchemes("ApiKey", new SecurityScheme()
-                                .type(SecurityScheme.Type.APIKEY)
-                                .in(SecurityScheme.In.HEADER)
-                                .name("X-API-Key")));
+                .addSecurityItem(new SecurityRequirement().addList("JWT"))
+                .components(
+                        new Components()
+                                .addSecuritySchemes("JWT",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                                .name(HttpHeaders.AUTHORIZATION)
+                                )
+                );
     }
 }

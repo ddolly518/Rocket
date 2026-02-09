@@ -1,6 +1,25 @@
 package com.example.chatbot.config;
 
-// OpenAI API에 요청할 때 사용할 공통 클라이언트 설정
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
+
+// OpenAI와 통신할 준비를 해주는 설정
+@Configuration
 public class OpenAIConfig {
 
+    @Value("${openai.api-key}")
+    private String apiKey;
+
+    @Bean
+    public WebClient openAiWebClient(WebClient.Builder builder) {
+        return builder
+                .baseUrl("https://api.openai.com")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
 }

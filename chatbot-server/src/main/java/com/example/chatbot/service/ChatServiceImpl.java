@@ -5,6 +5,10 @@ import com.example.chatbot.dto.ConversationDto;
 import com.example.chatbot.dto.MessageDto;
 import com.example.chatbot.entity.Conversation;
 import com.example.chatbot.entity.Message;
+import com.example.chatbot.entity.Role;
+import com.example.chatbot.entity.User;
+import com.example.chatbot.exception.CustomErrorCode;
+import com.example.chatbot.exception.CustomException;
 import com.example.chatbot.repository.ConversationRepository;
 import com.example.chatbot.repository.MessageRepository;
 import jakarta.transaction.Transactional;
@@ -21,25 +25,31 @@ public class ChatServiceImpl implements ChatService {
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
     private final OpenAIService openAIService;
+    private final UserService userService;
 
     @Transactional
     public MessageDto processChat(ChatRequest request) {
+        User currentUser = userService.getCurrentUser();
+
         // 1. 대화 조회 또는 생성
         Conversation conversation;
         if (request.getConversationId() != null) {
             conversation = conversationRepository.findById(request.getConversationId())
-                    .orElseThrow(() -> new NotFoundException("Conversation not found"));
+                    .orElseThrow(() -> new CustomException(CustomErrorCode.CONVERSATION_NOT_EXIST));
         } else {
-            conversation = new Conversation();
-            conversation.setTitle(request.getMessage().substring(0, Math.min(50, request.getMessage().length())));
+            conversation = Conversation.builder()
+                    .user(currentUser)
+                    .title(request.getMessage().substring(0, Math.min(50, request.getMessage().length())))
+                    .build();
             conversation = conversationRepository.save(conversation);
         }
 
         // 2. 사용자 메시지 저장
-        Message userMessage = new Message();
-        userMessage.setConversation(conversation);
-        userMessage.setRole("user");
-        userMessage.setContent(request.getMessage());
+        Message userMessage = Message.builder()
+                .conversation(conversation)
+                .role(Role.USER)
+                .content(request.getMessage())
+                .build();
         messageRepository.save(userMessage);
 
         // 3. 이전 대화 컨텍스트 조회 (최근 10개)
@@ -51,10 +61,11 @@ public class ChatServiceImpl implements ChatService {
         String aiResponse = openAIService.chat(contextMessages);
 
         // 5. AI 응답 저장
-        Message assistantMessage = new Message();
-        assistantMessage.setConversation(conversation);
-        assistantMessage.setRole("assistant");
-        assistantMessage.setContent(aiResponse);
+        Message assistantMessage = Message.builder()
+                .conversation(conversation)
+                .role(Role.ASSISTANT)
+                .content(aiResponse)
+                .build();
         messageRepository.save(assistantMessage);
 
         return MessageDto.from(assistantMessage);
@@ -79,4 +90,9 @@ public class ChatServiceImpl implements ChatService {
     public void deleteConversation(Long id) {
 
     }
+
+    /*@Override
+    public Flux<String> chatStream(String message, Long conversationId) {
+        openAIService.chatStream(message, conversationId);
+    }*/
 }
