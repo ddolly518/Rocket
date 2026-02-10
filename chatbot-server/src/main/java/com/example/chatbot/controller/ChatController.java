@@ -3,6 +3,7 @@ package com.example.chatbot.controller;
 import com.example.chatbot.dto.ChatRequest;
 import com.example.chatbot.dto.ConversationDetailDto;
 import com.example.chatbot.dto.ConversationSummaryDto;
+import com.example.chatbot.gpt.ChatPrompt;
 import com.example.chatbot.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import com.example.chatbot.common.ApiResponse;
@@ -28,7 +29,7 @@ public class ChatController {
     @Operation(summary = "채팅 메시지 전송", description = "사용자 메시지를 전송하고 AI 응답을 받습니다.")
     @PostMapping("/chat/completions")
     public ResponseEntity<ApiResponse<MessageDto>> chat(@RequestBody ChatRequest request) {
-        MessageDto response = chatService.processChat(request);
+        MessageDto response = chatService.processChat(request, ChatPrompt.GENERAL);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -62,6 +63,17 @@ public class ChatController {
     public ResponseEntity<ApiResponse<Void>> deleteConversation(@PathVariable Long id) {
         chatService.deleteConversation(id);
         return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    // 수리 접수 전용 메시지 전송 및 응답
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "대화 존재하지 않음: C001")
+    })
+    @Operation(summary = "수리 접수 채팅 메시지 전송", description = "사용자 메시지를 전송하고 수리 접수 AI 응답을 받습니다.")
+    @PostMapping("/chat/repairs")
+    public ResponseEntity<ApiResponse<MessageDto>> repairChat(@RequestBody ChatRequest request) {
+        MessageDto response = chatService.processChat(request, ChatPrompt.REPAIR);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     /*@GetMapping(value = "/chat/completions/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

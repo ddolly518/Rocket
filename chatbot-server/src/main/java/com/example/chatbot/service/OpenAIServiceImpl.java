@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // 외부 OpenAI와 통신하는 전담 클래스
@@ -42,20 +43,21 @@ public class OpenAIServiceImpl implements OpenAIService {
     }*/
 
     @Override
-    public String chat(List<Message> contextMessages) {
+    public String chat(List<Message> contextMessages, String systemPrompt) {
 
         // 1. 대화 컨텍스트 → OpenAI messages 변환
-        // m.getRole() -> m.getRole().value()로 변경
-        List<OpenAIMessage> messages = contextMessages.stream()
+        List<OpenAIMessage> messages = new ArrayList<>();
+        messages.add(new OpenAIMessage("system", systemPrompt));
+        messages.addAll(contextMessages.stream()
                 .map(m -> new OpenAIMessage(m.getRole().value(), m.getContent()))
-                .toList();
+                .toList());
 
         // 2. OpenAI 요청 생성
-        OpenAIChatRequest request = OpenAIChatRequest.builder()
-                .model(model)
-                .messages(messages)
-                .temperature(0.7)
-                .build();
+        OpenAIChatRequest request = new OpenAIChatRequest(
+                model,
+                messages,
+                0.7
+        );
 
         // 3. OpenAI API 호출
         OpenAIChatResponse response = openAiWebClient.post()
