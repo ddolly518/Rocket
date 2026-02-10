@@ -36,6 +36,11 @@ public class ChatServiceImpl implements ChatService {
         if (request.getConversationId() != null) {
             conversation = conversationRepository.findById(request.getConversationId())
                     .orElseThrow(() -> new CustomException(CustomErrorCode.CONVERSATION_NOT_EXIST));
+
+            // 대화 소유권 검증
+            if (!conversation.getUser().getId().equals(currentUser.getId())) {
+                throw new CustomException(CustomErrorCode.UNAUTHORIZED);
+            }
         } else {
             conversation = Conversation.builder()
                     .user(currentUser)
