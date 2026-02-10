@@ -1,7 +1,8 @@
 package com.example.chatbot.service;
 
 import com.example.chatbot.dto.ChatRequest;
-import com.example.chatbot.dto.ConversationDto;
+import com.example.chatbot.dto.ConversationDetailDto;
+import com.example.chatbot.dto.ConversationSummaryDto;
 import com.example.chatbot.dto.MessageDto;
 import com.example.chatbot.entity.Conversation;
 import com.example.chatbot.entity.Message;
@@ -27,20 +28,16 @@ public class ChatServiceImpl implements ChatService {
     private final OpenAIService openAIService;
     private final UserService userService;
 
+    // 메시지 전송 및 응답
     @Transactional
     public MessageDto processChat(ChatRequest request) {
+
         User currentUser = userService.getCurrentUser();
 
         // 1. 대화 조회 또는 생성
         Conversation conversation;
         if (request.getConversationId() != null) {
-            conversation = conversationRepository.findById(request.getConversationId())
-                    .orElseThrow(() -> new CustomException(CustomErrorCode.CONVERSATION_NOT_EXIST));
-
-            // 대화 소유권 검증
-            if (!conversation.getUser().getId().equals(currentUser.getId())) {
-                throw new CustomException(CustomErrorCode.UNAUTHORIZED);
-            }
+            conversation = getAuthorizedConversation(request.getConversationId());
         } else {
             conversation = Conversation.builder()
                     .user(currentUser)
@@ -76,28 +73,68 @@ public class ChatServiceImpl implements ChatService {
         return MessageDto.from(assistantMessage);
     }
 
+    // 대화 목록 조회
     @Override
-    public List<ConversationDto> getAllConversations() {
-        return List.of();
+    public List<ConversationSummaryDto> getAllConversations() {
+
+        User currentUser = userService.getCurrentUser();
+
+        return conversationRepository.findAllByUserOrderByCreatedAtDesc(currentUser)
+                .stream()
+                .map(ConversationSummaryDto::from)
+                .toList();
     }
 
+    // 대화 상세 조회
     @Override
-    public ConversationDto getConversationById(Long id) {
-        return null;
+    public ConversationDetailDto getConversationById(Long id) {
+
+        Conversation conversation = getAuthorizedConversation(id);
+        long count = messageRepository.countByConversationId(id);
+
+        return ConversationDetailDto.from(conversation, count);
     }
 
+    // 대화 내 메시지 조회
     @Override
     public List<MessageDto> getMessagesByConversationId(Long id) {
-        return List.of();
+
+        Conversation conversation = getAuthorizedConversation(id);
+
+        return messageRepository.findAllByConversationIdOrderByCreatedAtAsc(id)
+                .stream()
+                .map(MessageDto::from)
+                .toList();
     }
 
+    // 대화 삭제
     @Override
+    @Transactional
     public void deleteConversation(Long id) {
 
+        Conversation conversation = getAuthorizedConversation(id);
+
+        messageRepository.deleteAllByConversationId(id);
+        conversationRepository.delete(conversation);
     }
 
     /*@Override
     public Flux<String> chatStream(String message, Long conversationId) {
         openAIService.chatStream(message, conversationId);
     }*/
+
+    // 대화 소유권 검증
+    private Conversation getAuthorizedConversation(Long conversationId) {
+
+        User currentUser = userService.getCurrentUser();
+
+        Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.CONVERSATION_NOT_EXIST));
+
+        if (!conversation.getUser().getId().equals(currentUser.getId())) {
+            throw new CustomException(CustomErrorCode.UNAUTHORIZED);
+        }
+
+        return conversation;
+    }
 }

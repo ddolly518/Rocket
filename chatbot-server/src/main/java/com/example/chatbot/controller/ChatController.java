@@ -1,7 +1,8 @@
 package com.example.chatbot.controller;
 
 import com.example.chatbot.dto.ChatRequest;
-import com.example.chatbot.dto.ConversationDto;
+import com.example.chatbot.dto.ConversationDetailDto;
+import com.example.chatbot.dto.ConversationSummaryDto;
 import com.example.chatbot.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import com.example.chatbot.common.ApiResponse;
@@ -34,16 +35,16 @@ public class ChatController {
     // 대화 목록 조회
     @Operation(summary = "대화 목록 조회", description = "사용자의 전체 대화 목록을 조회합니다.")
     @GetMapping("/conversations")
-    public ResponseEntity<ApiResponse<List<ConversationDto>>> getConversations() {
-        List<ConversationDto> conversations = chatService.getAllConversations();
+    public ResponseEntity<ApiResponse<List<ConversationSummaryDto>>> getConversations() {
+        List<ConversationSummaryDto> conversations = chatService.getAllConversations();
         return ResponseEntity.ok(ApiResponse.success(conversations));
     }
 
     // 대화 상세 조회
     @Operation(summary = "대화 상세 조회", description = "대화 ID를 기준으로 대화 상세 정보를 조회합니다.")
     @GetMapping("/conversations/{id}")
-    public ResponseEntity<ApiResponse<ConversationDto>> getConversation(@PathVariable Long id) {
-        ConversationDto conversation = chatService.getConversationById(id);
+    public ResponseEntity<ApiResponse<ConversationDetailDto>> getConversation(@PathVariable Long id) {
+        ConversationDetailDto conversation = chatService.getConversationById(id);
         return ResponseEntity.ok(ApiResponse.success(conversation));
     }
 
