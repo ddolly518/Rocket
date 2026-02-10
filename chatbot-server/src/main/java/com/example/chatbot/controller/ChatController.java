@@ -21,12 +21,10 @@ public class ChatController {
     private final ChatService chatService;
 
     // 메시지 전송 및 응답
-    @Operation(summary = "채팅 메시지 전송", description = "사용자 메시지를 전송하고 AI 응답을 받습니다.")
     @ApiResponses({
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증 실패"),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "서버 오류")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "대화 존재하지 않음: C001")
     })
+    @Operation(summary = "채팅 메시지 전송", description = "사용자 메시지를 전송하고 AI 응답을 받습니다.")
     @PostMapping("/chat/completions")
     public ResponseEntity<ApiResponse<MessageDto>> chat(@RequestBody ChatRequest request) {
         MessageDto response = chatService.processChat(request);
@@ -34,6 +32,7 @@ public class ChatController {
     }
 
     // 대화 목록 조회
+    @Operation(summary = "대화 목록 조회", description = "사용자의 전체 대화 목록을 조회합니다.")
     @GetMapping("/conversations")
     public ResponseEntity<ApiResponse<List<ConversationDto>>> getConversations() {
         List<ConversationDto> conversations = chatService.getAllConversations();
@@ -41,6 +40,7 @@ public class ChatController {
     }
 
     // 대화 상세 조회
+    @Operation(summary = "대화 상세 조회", description = "대화 ID를 기준으로 대화 상세 정보를 조회합니다.")
     @GetMapping("/conversations/{id}")
     public ResponseEntity<ApiResponse<ConversationDto>> getConversation(@PathVariable Long id) {
         ConversationDto conversation = chatService.getConversationById(id);
@@ -48,6 +48,7 @@ public class ChatController {
     }
 
     // 대화 내 메시지 조회
+    @Operation(summary = "대화 메시지 조회", description = "특정 대화에 포함된 모든 메시지를 조회합니다.")
     @GetMapping("/conversations/{id}/messages")
     public ResponseEntity<ApiResponse<List<MessageDto>>> getMessages(@PathVariable Long id) {
         List<MessageDto> messages = chatService.getMessagesByConversationId(id);
@@ -55,6 +56,7 @@ public class ChatController {
     }
 
     // 대화 삭제
+    @Operation(summary = "대화 삭제", description = "대화 ID를 기준으로 대화를 삭제합니다.")
     @DeleteMapping("/conversations/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteConversation(@PathVariable Long id) {
         chatService.deleteConversation(id);
