@@ -5,6 +5,7 @@ import com.example.chatbot.dto.LoginResponse;
 import com.example.chatbot.dto.SignupRequest;
 import com.example.chatbot.dto.SignupResponse;
 import com.example.chatbot.service.AuthService;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -19,14 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
+
     private final AuthService authService;
 
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "이미 가입된 이메일: M003")
+    })
     @PostMapping("/signup")
     public ResponseEntity<SignupResponse> signup(@RequestBody @Valid SignupRequest request) {
         SignupResponse response = authService.signup(request);
         return ResponseEntity.ok(response);
     }
 
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "회원 존재하지 않음: M001, 이메일 또는 비밀번호 불일치: M002")
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpServletResponse httpResponse) {
         LoginResponse response = authService.login(request, httpResponse);
