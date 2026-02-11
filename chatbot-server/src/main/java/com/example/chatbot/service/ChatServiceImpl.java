@@ -10,6 +10,8 @@ import com.example.chatbot.entity.Role;
 import com.example.chatbot.entity.User;
 import com.example.chatbot.exception.CustomErrorCode;
 import com.example.chatbot.exception.CustomException;
+import com.example.chatbot.gpt.ChatPrompt;
+import com.example.chatbot.gpt.RepairChatResponseHandler;
 import com.example.chatbot.repository.ConversationRepository;
 import com.example.chatbot.repository.MessageRepository;
 import jakarta.transaction.Transactional;
@@ -27,21 +29,23 @@ public class ChatServiceImpl implements ChatService {
     private final MessageRepository messageRepository;
     private final OpenAIService openAIService;
     private final UserService userService;
+    private final RepairChatResponseHandler repairChatResponseHandler;
 
     // 메시지 전송 및 응답
+    @Override
     @Transactional
-    public MessageDto processChat(ChatRequest request) {
+    public MessageDto processChat(ChatRequest request, ChatPrompt chatPrompt) {
 
         User currentUser = userService.getCurrentUser();
 
         // 1. 대화 조회 또는 생성
         Conversation conversation;
-        if (request.getConversationId() != null) {
-            conversation = getAuthorizedConversation(request.getConversationId());
+        if (request.conversationId() != null) {
+            conversation = getAuthorizedConversation(request.conversationId());
         } else {
             conversation = Conversation.builder()
                     .user(currentUser)
-                    .title(request.getMessage().substring(0, Math.min(50, request.getMessage().length())))
+                    .title(request.message().substring(0, Math.min(50, request.message().length())))
                     .build();
             conversation = conversationRepository.save(conversation);
         }
@@ -50,7 +54,7 @@ public class ChatServiceImpl implements ChatService {
         Message userMessage = Message.builder()
                 .conversation(conversation)
                 .role(Role.USER)
-                .content(request.getMessage())
+                .content(request.message())
                 .build();
         messageRepository.save(userMessage);
 
@@ -60,7 +64,11 @@ public class ChatServiceImpl implements ChatService {
         Collections.reverse(contextMessages);
 
         // 4. OpenAI API 호출
-        String aiResponse = openAIService.chat(contextMessages);
+        String systemPrompt = chatPrompt == ChatPrompt.REPAIR ? ChatPrompt.REPAIR.value() : ChatPrompt.GENERAL.value();
+        String aiResponse = openAIService.chat(contextMessages, systemPrompt);
+        if (chatPrompt == ChatPrompt.REPAIR) {
+            aiResponse = repairChatResponseHandler.handle(aiResponse);
+        }
 
         // 5. AI 응답 저장
         Message assistantMessage = Message.builder()
