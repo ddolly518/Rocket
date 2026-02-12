@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface OpenAIService {
     String chat(List<Message> contextMessages, String systemPrompt);
-    //Flux<String> chatStream(String message, Long conversationId);
+    Flux<String> chatStream(String message, Long conversationId);
 }

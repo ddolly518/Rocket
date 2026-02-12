@@ -17,6 +17,7 @@ import com.example.chatbot.repository.MessageRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.util.Collections;
 import java.util.List;
@@ -125,11 +126,6 @@ public class ChatServiceImpl implements ChatService {
         messageRepository.deleteAllByConversationId(id);
         conversationRepository.delete(conversation);
     }
-
-    /*@Override
-    public Flux<String> chatStream(String message, Long conversationId) {
-        openAIService.chatStream(message, conversationId);
-    }*/
 
     // 대화 소유권 검증
     private Conversation getAuthorizedConversation(Long conversationId) {
