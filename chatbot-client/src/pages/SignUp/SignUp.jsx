@@ -7,6 +7,7 @@ import {Facebook} from "../../components/Facebook/Facebook";
 import {Google} from "../../components/Google/Google";
 import {Group} from "../../components/Group/Group";
 import {GroupWrapper} from "../../components/GroupWrapper/GroupWrapper";
+import UserTypeToggle from "../../components/UserTypeToggle/UserTypeToggle";
 
 import Logo from "../../assets/logo.png";
 import Saly from "../../assets/saly.png";
@@ -15,13 +16,16 @@ import Invisible from "../../assets/Invisible.png";
 import "./SignUp.css";
 
 export const SignUp = () => {
+    const [userType, setUserType] = useState("");
     const [email, setEmail] = useState("");
+    const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     
     const handleSignUp = async () => {
         try {
             const response = await api.post("/auth/signup", {
+                userType,
                 email,
                 password,
                 confirmPassword
@@ -68,11 +72,9 @@ export const SignUp = () => {
             <div className="group-7">
                 <div className="text-wrapper-5">Sign Up</div>
             
-                <Group
-                    className="group-13"
-                    divClassName="group-13-instance"
-                    rectangleClassName="group-instance"
-                    text="Choose User Type"
+                <UserTypeToggle
+                    value={userType}
+                    onChange={setUserType}
                 />
 
                 <Group
@@ -90,6 +92,9 @@ export const SignUp = () => {
                     divClassName="group-16-instance"
                     rectangleClassName="group-instance"
                     text="Create User name"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    type="nickname"
                 />
 
                 <div className="group-18">

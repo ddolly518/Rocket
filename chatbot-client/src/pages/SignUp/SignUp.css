@@ -1,9 +1,8 @@
 .sign-up {
     background-color: #ffffff;
     display: flex;
-    min-height: 900px;
-    min-width: 1440px;
     width: 100%;
+    min-height: 100vh;
 }
 
 .sign-up .image {
@@ -133,13 +132,6 @@
     letter-spacing: 0;
     line-height: normal;
     width: 99px;
-    white-space: nowrap;
-}
-
-.sign-up .group-13 {
-    margin-top: 28px !important;
-    position: unset !important;
-    top: unset !important;
     white-space: nowrap;
 }
 

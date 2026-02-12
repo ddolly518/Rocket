@@ -3,7 +3,7 @@
     height: 62px;
     position: relative;
     top: 73px;
-    width: 369px;
+    width: 550px;
 }
 
 .group .div-wrapper {
@@ -25,7 +25,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 99.46%;
+    width: 67%;
 }
 
 .group .enter-email {
@@ -34,12 +34,12 @@
     font-size: 15px;
     font-weight: 400;
     height: 37.10%;
-    left: 7.01%;
+    left: 5.01%;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     top: 28%;
-    width: 50.67%;
+    width: 100%;
     border: none; 
     outline: none; 
     background: transparent;

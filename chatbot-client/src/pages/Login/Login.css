@@ -1,9 +1,8 @@
 .login {
     background-color: #ffffff;
     display: flex;
-    min-height: 900px;
-    min-width: 1440px;
     width: 100%;
+    min-height: 100vh;
 }
 
 .login .image {
