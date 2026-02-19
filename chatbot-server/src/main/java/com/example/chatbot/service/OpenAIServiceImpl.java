@@ -4,6 +4,7 @@ import com.example.chatbot.dto.OpenAIChatRequest;
 import com.example.chatbot.dto.OpenAIChatResponse;
 import com.example.chatbot.dto.OpenAIMessage;
 import com.example.chatbot.entity.Message;
+import com.example.chatbot.gpt.ChatPrompt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,21 +32,32 @@ public class OpenAIServiceImpl implements OpenAIService {
     private String url;
 
     @Override
-    public String chat(List<Message> contextMessages, String systemPrompt) {
+    public String chat(List<Message> contextMessages, ChatPrompt systemPrompt) {
 
         // 1. 대화 컨텍스트 → OpenAI messages 변환
         List<OpenAIMessage> messages = new ArrayList<>();
-        messages.add(new OpenAIMessage("system", systemPrompt));
+        messages.add(new OpenAIMessage("system", systemPrompt.value()));
         messages.addAll(contextMessages.stream()
                 .map(m -> new OpenAIMessage(m.getRole().value(), m.getContent()))
                 .toList());
 
         // 2. OpenAI 요청 생성
-        OpenAIChatRequest request = new OpenAIChatRequest(
-                model,
-                messages,
-                0.7
-        );
+        OpenAIChatRequest request;
+
+        if (systemPrompt == ChatPrompt.REPAIR) {
+            request = new OpenAIChatRequest(
+                    model,
+                    messages,
+                    0.0,
+                    Map.of("type", "json_object")
+            );
+        } else {
+            request = new OpenAIChatRequest(
+                    model,
+                    messages,
+                    0.7
+            );
+        }
 
         // 3. OpenAI API 호출
         OpenAIChatResponse response = openAiWebClient.post()

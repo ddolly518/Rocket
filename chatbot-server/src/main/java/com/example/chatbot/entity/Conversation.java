@@ -30,6 +30,9 @@ public class Conversation {
     @Column(name = "title", length = 255, nullable = false)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
+    private String summary;
+
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
 
@@ -40,4 +43,8 @@ public class Conversation {
     @UpdateTimestamp
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime updatedAt;
+
+    public void updateSummary(String summary) {
+        this.summary = summary;
+    }
 }
