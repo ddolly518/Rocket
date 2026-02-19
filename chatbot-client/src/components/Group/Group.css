@@ -1,0 +1,47 @@
+.group {
+    display: flex;
+    height: 62px;
+    position: relative;
+    top: 73px;
+    width: 550px;
+}
+
+.group .div-wrapper {
+    display: flex;
+    flex: 1;
+    width: 369px;
+}
+
+.group .div {
+    flex: 1;
+    position: relative;
+    width: 371px;
+}
+
+.group .rectangle {
+    background-color: #efefff;
+    border-radius: 8px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 67%;
+}
+
+.group .enter-email {
+    color: #a7a2ff;
+    font-family: "Poppins", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    height: 37.10%;
+    left: 5.01%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 28%;
+    width: 100%;
+    border: none; 
+    outline: none; 
+    background: transparent;
+    color: #5bb5a2;
+}

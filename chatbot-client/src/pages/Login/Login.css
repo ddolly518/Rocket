@@ -1,0 +1,270 @@
+.login {
+    background-color: #ffffff;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.login .image {
+    height: 41px;
+    margin-left: 42px;
+    margin-top: 31px;
+    object-fit: cover;
+    width: 100px;
+}
+
+.login .group-3 {
+    height: 606px;
+    margin-left: 210px;
+    margin-top: 294px;
+    position: relative;
+    width: 629px;
+}
+
+.login .group-4 {
+    display: flex;
+    flex-direction: column;
+    gap: 48.4px;
+    height: 219px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 396px;
+}
+
+.login .group-5 {
+    display: flex;
+    flex-direction: column;
+    gap: 4.6px;
+    height: 121.38px;
+    width: 400px;
+    text-align: left;
+}
+
+.login .text-wrapper-2 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 50px;
+    font-weight: 600;
+    height: 68.45px;
+    letter-spacing: 0;
+    line-height: normal;
+    width: 234px;
+}
+
+.login .text-wrapper-3 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 35px;
+    font-weight: 500;
+    height: 48.37px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 0;
+    width: 396px;
+}
+
+.login .group-6 {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    height: 49.28px;
+    width: 312px;
+    text-align: left;
+}
+
+.login .p {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 21.9px;
+    letter-spacing: 0;
+    line-height: normal;
+    width: 308px;
+}
+
+.login .you-can-register {
+    color: transparent;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 21.9px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 0;
+    width: 308px;
+}
+
+.login .span {
+    color: #000000;
+}
+
+.login .text-wrapper-4 {
+    color: #5bb5a2;
+    font-weight: 600;
+}
+
+.login .saly {
+    height: 507px;
+    left: 316px;
+    position: absolute;
+    top: 99px;
+    width: 313px;
+}
+
+.login .group-7 {
+    display: flex;
+    flex-direction: column;
+    height: 543.12px;
+    margin-left: 135px;
+    margin-top: 174px;
+    width: 374px;
+}
+
+.login .text-wrapper-5 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 30px;
+    font-weight: 500;
+    height: 45px;
+    letter-spacing: 0;
+    line-height: normal;
+    width: 99px;
+}
+
+.login .group-15 {
+    margin-top: 28px !important;
+    position: unset !important;
+    top: unset !important;
+}
+
+.login .group-instance {
+    background-color: #5bb5a226 !important;
+}
+
+.login .group-15-instance {
+    color: #5bb5a2 !important;
+    width: 22.64% !important;
+}
+
+.login .group-8 {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    height: 99px;
+    margin-top: 38px;
+    width: 372px;
+}
+
+.login .group-9 {
+    height: 62px;
+    position: relative;
+    width: 369px;
+}
+
+.login .group-10 {
+    height: 62px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 371px;
+}
+
+.login .rectangle-3 {
+    background-color: #5bb5a226;
+    border-radius: 8px;
+    height: 62px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 369px;
+}
+
+.login .text-wrapper-6 {
+    color: #5bb5a2;
+    font-family: "Poppins", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    left: 29px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 22px;
+    width: 82px;
+    border: none; 
+    outline: none; 
+    background: transparent;
+    color: #5bb5a2;
+}
+
+.login .invisible {
+    height: 17px;
+    left: 320px;
+    position: absolute;
+    top: 23px;
+    width: 23px;
+}
+
+.login .text-wrapper-7 {
+    color: #b0b0b0;
+    font-family: "Poppins", Helvetica;
+    font-size: 13px;
+    font-weight: 400;
+    height: 20px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 250px;
+    width: 120px;
+}
+
+.login .group-14 {
+    margin-top: 46px !important;
+    position: unset !important;
+    top: unset !important;
+}
+
+.login .group-14-instance {
+    background-color: #5bb5a2 !important;
+}
+
+.login .text-wrapper-8 {
+    color: #b4b4b4;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 24px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-left: 120px;
+    margin-top: 54px;
+    width: 130px;
+}
+
+.login .group-11 {
+    display: flex;
+    margin-left: 102px;
+    margin-top: 45px;
+    width: 165px;
+}
+
+.login .group-12 {
+    display: flex;
+    height: 43.12px;
+    position: relative;
+    width: 165px;
+}
+
+.login .facebook-instance {
+    top: 2px !important;
+}
+
+.login .apple-instance {
+    height: 96.15% !important;
+    left: 37.69% !important;
+    width: 25.13% !important;
+}
+
+.login .google-instance {
+    left: 124px !important;
+}

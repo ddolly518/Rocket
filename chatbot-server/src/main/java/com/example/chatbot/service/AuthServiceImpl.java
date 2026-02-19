@@ -37,6 +37,10 @@ public class AuthServiceImpl implements AuthService {
             throw new CustomException(CustomErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
+        if (request.password().equals(request.confirmPassword())) {
+            throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
+        }
+
         String encodedPassword = passwordEncoder.encode(request.password());
         Type type = Type.fromCode(request.type());
 
