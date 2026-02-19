@@ -61,6 +61,9 @@ dependencies {
 
     // Rate Limiting
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:8.0.1'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

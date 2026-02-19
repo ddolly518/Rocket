@@ -94,6 +94,14 @@ public class JwtTokenProvider {
         return getClaims(token).get(ROLES, List.class);
     }
 
+    public long getAccessTokenValidity() {
+        return ACCESS_TOKEN_VALIDITY;
+    }
+
+    public long getRefreshTokenValidity() {
+        return REFRESH_TOKEN_VALIDITY;
+    }
+
     // AccessToken 여부 확인
     public boolean isAccessToken(String token) {
         return ACCESS.equals(getTokenType(token));
