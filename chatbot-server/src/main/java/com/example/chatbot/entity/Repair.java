@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "repair_request")
-@Table(name = "repair_request")
+@Entity(name = "repair")
+@Table(name = "repair")
 @EntityListeners(AuditingEntityListener.class)
-public class RepairRequest {
+public class Repair {
     @Id
     @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,9 @@ public class RepairRequest {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RepairProduct product;
+
+    @Column(name = "issue", length = 255, nullable = false)
+    private String issue;
 
     @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
