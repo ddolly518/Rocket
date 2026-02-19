@@ -13,6 +13,9 @@ public record SignupRequest(
         @Schema(description = "사용자 비밀번호", example = "password")
         @NotBlank String password,
 
+        @Schema(description = "재확인 비밀번호", example = "password")
+        @NotBlank String confirmPassword,
+
         @Schema(description = "사용자 닉네임", example = "user")
         @NotBlank String nickname,
 

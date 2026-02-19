@@ -1,0 +1,30 @@
+.user-type-toggle {
+    display: flex;
+    width: 369px;
+    height: 62px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 23px;
+}
+
+.user-type-toggle .toggle-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    font-family: "Poppins", Helvetica;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: #5bb5a2;
+    outline: none; 
+}
+
+.user-type-toggle .toggle-btn:hover {
+    background-color: rgba(91, 181, 162, 0.1);
+}
+
+.user-type-toggle .toggle-btn.active {
+    background-color: #5bb5a2;
+    color: white;
+}
