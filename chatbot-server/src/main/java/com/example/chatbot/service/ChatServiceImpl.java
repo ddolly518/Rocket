@@ -12,12 +12,15 @@ import com.example.chatbot.exception.CustomErrorCode;
 import com.example.chatbot.exception.CustomException;
 import com.example.chatbot.gpt.ChatPrompt;
 import com.example.chatbot.gpt.RepairChatResponseHandler;
+import com.example.chatbot.gpt.SummaryService;
+import com.example.chatbot.gpt.TokenUtils;
 import com.example.chatbot.repository.ConversationRepository;
 import com.example.chatbot.repository.MessageRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +33,11 @@ public class ChatServiceImpl implements ChatService {
     private final OpenAIService openAIService;
     private final UserService userService;
     private final RepairChatResponseHandler repairChatResponseHandler;
+    private final TokenUtils tokenUtils;
+    private final SummaryService summaryService;
+
+    private static final int MAX_INPUT_TOKENS = 6000;
+    private static final int RESERVED_OUTPUT_TOKENS = 1000;
 
     // 메시지 전송 및 응답
     @Override
@@ -63,14 +71,42 @@ public class ChatServiceImpl implements ChatService {
                 .findTop10ByConversationIdOrderByCreatedAtDesc(conversation.getId());
         Collections.reverse(contextMessages);
 
-        // 4. OpenAI API 호출
-        String systemPrompt = chatPrompt == ChatPrompt.REPAIR ? ChatPrompt.REPAIR.value() : ChatPrompt.GENERAL.value();
-        String aiResponse = openAIService.chat(contextMessages, systemPrompt);
+        // 4. LLM 메시지 생성
+        List<Message> finalContext = new ArrayList<>();
+        String aiResponse;
+
         if (chatPrompt == ChatPrompt.REPAIR) {
+            finalContext.addAll(contextMessages);
+
+            // 5. OpenAI API 호출
+            aiResponse = openAIService.chat(finalContext, ChatPrompt.REPAIR);
             aiResponse = repairChatResponseHandler.handle(aiResponse);
+        } else {
+            // 토큰 기반 trimming
+            List<Message> trimmed = trim(contextMessages);
+
+            // summary 업데이트 필요 여부 확인
+            // 토큰 한도를 넘어서 일부 메시지가 잘려 크기가 같지 않음
+            if (trimmed.size() < contextMessages.size()) {
+                List<Message> removed = contextMessages.subList(0, contextMessages.size()- trimmed.size());
+                String newSummary = summaryService.summarize(conversation.getSummary(), removed);
+                conversation.updateSummary(newSummary);
+            }
+
+            // 요약 메시지 추가
+            if (conversation.getSummary()!=null && !conversation.getSummary().isBlank()) {
+                finalContext.add(Message.builder()
+                        .role(Role.ASSISTANT)
+                        .content("Conversation summary:\n" + conversation.getSummary())
+                        .build());
+            }
+            finalContext.addAll(trimmed);
+
+            // 5. OpenAI API 호출
+            aiResponse = openAIService.chat(finalContext, ChatPrompt.GENERAL);
         }
 
-        // 5. AI 응답 저장
+        // 6. AI 응답 저장
         Message assistantMessage = Message.builder()
                 .conversation(conversation)
                 .role(Role.ASSISTANT)
@@ -107,7 +143,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<MessageDto> getMessagesByConversationId(Long id) {
 
-        Conversation conversation = getAuthorizedConversation(id);
+        getAuthorizedConversation(id);
 
         return messageRepository.findAllByConversationIdOrderByCreatedAtAsc(id)
                 .stream()
@@ -126,11 +162,6 @@ public class ChatServiceImpl implements ChatService {
         conversationRepository.delete(conversation);
     }
 
-    /*@Override
-    public Flux<String> chatStream(String message, Long conversationId) {
-        openAIService.chatStream(message, conversationId);
-    }*/
-
     // 대화 소유권 검증
     private Conversation getAuthorizedConversation(Long conversationId) {
 
@@ -144,5 +175,30 @@ public class ChatServiceImpl implements ChatService {
         }
 
         return conversation;
+    }
+
+    // LLM 입력 토큰 한도를 넘지 않도록 최근 메시지만 남기는 슬라이딩 윈도우 로직
+    private List<Message> trim(List<Message> messages) {
+
+        int maxTokens = MAX_INPUT_TOKENS - RESERVED_OUTPUT_TOKENS; // 최대 입력 토큰
+        List<Message> result = new ArrayList<>(); // 결과 리스트 생성
+        int total = 0; // 현재까지 누적된 토큰 수
+
+        // 최신 메시지부터 검사
+        for (int i = messages.size() - 1; i >= 0; i--) {
+
+            Message m = messages.get(i);
+
+            // 실제 텍스트 토큰 수 계산 +4는 role
+            int tokens = tokenUtils.count(m.getContent()) + 4;
+
+            // 한도 초과 시 중단
+            if (total + tokens > maxTokens) break;
+
+            result.addFirst(m);
+            total += tokens;
+        }
+
+        return result;
     }
 }

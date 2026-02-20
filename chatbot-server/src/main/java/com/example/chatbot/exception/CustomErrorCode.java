@@ -15,7 +15,10 @@ public enum CustomErrorCode {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "M005", "인증이 필요합니다."),
 
     // 대화 C
-    CONVERSATION_NOT_EXIST(HttpStatus.BAD_REQUEST, "C001", "존재하지 않는 대화입니다.");
+    CONVERSATION_NOT_EXIST(HttpStatus.BAD_REQUEST, "C001", "존재하지 않는 대화입니다."),
+
+    // OpenAI
+    MODEL_NOT_FOUND(HttpStatus.BAD_REQUEST, "O001", "지원하지 않는 모델입니다.");
 
     private final HttpStatus status;
     private final String errorCode;

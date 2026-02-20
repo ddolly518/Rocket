@@ -14,8 +14,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
+    private final UserService userService;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
     public SignupResponse signup(SignupRequest request) {
@@ -64,6 +70,10 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = tokenProvider.createAccessToken(user.getEmail(), user.getType());
         String refreshToken = tokenProvider.createRefreshToken(user.getEmail());
 
+        // Redis에 refreshToken 저장
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
+
         // 쿠키 설정
         httpResponse.addCookie(createAccessTokenCookie(accessToken));
         httpResponse.addCookie(createRefreshTokenCookie(refreshToken));
@@ -76,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
         cookie.setHttpOnly(true);
         cookie.setSecure(true); // https 환경
         cookie.setPath("/");
-        cookie.setMaxAge(60 * 30); // 30분
+        cookie.setMaxAge((int) (tokenProvider.getAccessTokenValidity() / 1000)); // 1시간
         cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
@@ -86,7 +96,7 @@ public class AuthServiceImpl implements AuthService {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/auth/refresh");
-        cookie.setMaxAge(60 * 60 * 24 * 14); // 14일
+        cookie.setMaxAge((int) (tokenProvider.getRefreshTokenValidity() / 1000)); // 7일
         cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
@@ -103,6 +113,13 @@ public class AuthServiceImpl implements AuthService {
 
         String email = tokenProvider.getEmail(refreshToken);
 
+        // Redis에서 RefreshToken 확인
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        String storedToken = ops.get("refreshToken:" + email);
+        if (!refreshToken.equals(storedToken)) {
+            throw new CustomException(CustomErrorCode.INVALID_TOKEN);
+        }
+
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
 
@@ -112,6 +129,7 @@ public class AuthServiceImpl implements AuthService {
         response.addCookie(createAccessTokenCookie(newAccessToken));
     }
 
+    // refreshToken 추출
     private String extractRefreshToken(HttpServletRequest request) {
         if (request.getCookies() == null) return null;
 
@@ -125,6 +143,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void logout(HttpServletResponse response) {
+
+        User currentUser = userService.getCurrentUser();
+
+        // Redis에서 RefreshToken 삭제
+        redisTemplate.delete("refreshToken:" + currentUser.getEmail());
+
         // accessToken 쿠키 삭제
         Cookie accessToken = new Cookie("accessToken", null);
         accessToken.setHttpOnly(true);

@@ -5,13 +5,16 @@ import com.example.chatbot.dto.ConversationDetailDto;
 import com.example.chatbot.dto.ConversationSummaryDto;
 import com.example.chatbot.gpt.ChatPrompt;
 import com.example.chatbot.service.ChatService;
+import com.example.chatbot.service.OpenAIService;
 import io.swagger.v3.oas.annotations.Operation;
 import com.example.chatbot.common.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.chatbot.dto.MessageDto;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
+    private final OpenAIService openAIService;
 
     // 메시지 전송 및 응답
     @ApiResponses({
@@ -76,9 +80,9 @@ public class ChatController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    /*@GetMapping(value = "/chat/completions/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/chat/completions/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> chatStream(@RequestParam String message,
                                    @RequestParam(required = false) Long conversationId) {
-        return chatService.chatStream(message, conversationId);
-    }*/
+        return openAIService.chatStream(message, conversationId);
+    }
 }

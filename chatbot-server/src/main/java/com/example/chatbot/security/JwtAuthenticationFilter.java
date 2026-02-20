@@ -76,6 +76,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    // async 재디스패치에도 필터 적용
+    @Override
+    protected boolean shouldNotFilterAsyncDispatch() {
+        return false;
+    }
+
     private String resolveToken(HttpServletRequest request) {
         // 이름이 accessToken인 쿠키를 찾아 JWT 문자열 반환
         Cookie[] cookies = request.getCookies();
