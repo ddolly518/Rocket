@@ -1,13 +1,13 @@
 # build
-FROM node:20 AS build
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm install
 RUN npm run build
 
 # production
-FROM nginx:stable-alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+EXPOSE 4173
+CMD ["npx", "vite", "preview", "--port", "4173"]

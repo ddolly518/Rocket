@@ -5,7 +5,7 @@ COPY . .
 RUN gradle clean build -x test
 
 # 2단계: 실행
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 
