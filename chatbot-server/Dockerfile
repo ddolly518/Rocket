@@ -1,5 +1,5 @@
 # 1단계: 빌드 -> /app/build/libs/xxx.jar 생성
-FROM gradle:8.5-jdk21 AS build
+FROM gradle:9.3-jdk21 AS build
 WORKDIR /app
 COPY . .
 RUN gradle clean build -x test
