@@ -3,6 +3,7 @@ package com.example.chatbot.config;
 import com.example.chatbot.security.CustomAuthenticationEntryPoint;
 import com.example.chatbot.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,9 @@ import java.util.List;
 @EnableWebSecurity // Spring Security 활성화
 @RequiredArgsConstructor // 의존성 주입(DI)
 public class SecurityConfig {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     // JWT 필터 : 요청에 담긴 JWT를 검사해서 로그인된 사용자로 만들어주는 필터
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -76,9 +80,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         // CORS(브라우저 보안 규칙) 정책 정의 빈 등록
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of(
-                "http://localhost:5173" // 프론트 도메인
-        ));
+        config.setAllowedOriginPatterns(List.of(frontendUrl));
         config.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS")); // 허용 HTTP 메서드
         config.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         config.setAllowCredentials(true); // 인증정보 포함 허용

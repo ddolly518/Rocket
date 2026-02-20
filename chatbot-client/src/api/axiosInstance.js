@@ -12,8 +12,8 @@ import qs from 'qs';
 
 // 공통 설정을 가진 axios 객체 생성
 const api = axios.create({
-    baseURL: '/api', // 모든 요청은 자동으로 /api로 시작
-    //withCredentials: true,       // 쿠키 필요 시
+    baseURL: import.meta.env.VITE_API_URL, // 모든 요청은 자동으로 /api로 시작
+    withCredentials: true,       // 쿠키 필요 시
     // 기본 headers에서 'Content-Type' 제거!
     paramsSerializer: params =>
         qs.stringify(params, {arrayFormat: 'repeat'}), // 쿼리 파라미터를 서버 친화적인 URL 문자열로 만들어줌
