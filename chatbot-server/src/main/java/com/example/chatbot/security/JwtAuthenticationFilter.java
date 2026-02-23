@@ -29,7 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // 허용 목록
     private static final String[] WHITE_LIST = {
             // Auth & Admin login endpoints
-            "/api/auth",
+            "/api/auth/signup",
+            "/api/auth/login",
+            "/api/auth/reissue",
             // Public resources & docs
             "/swagger-ui", "/v3/api-docs",
             "/webjars"

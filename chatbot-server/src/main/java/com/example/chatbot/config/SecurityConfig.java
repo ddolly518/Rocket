@@ -54,7 +54,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**",
-                                "/api/auth/**"
+                                "/api/auth/signup",
+                                "/api/auth/login",
+                                "/api/auth/reissue"
                         ).permitAll() // 로그인 없이 누구나 접근 가능
                         .anyRequest().authenticated() // 나머지 전부 인증 필요
                 )
