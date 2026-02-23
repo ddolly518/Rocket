@@ -10,4 +10,4 @@ FROM node:20-alpine
 WORKDIR /app
 COPY --from=build /app/dist ./dist
 EXPOSE 4173
-CMD ["npx", "vite", "preview", "--port", "4173"]
+CMD ["sh", "-c", "npx vite preview --port $PORT --host"]

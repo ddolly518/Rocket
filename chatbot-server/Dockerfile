@@ -12,4 +12,4 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 
 # java -jar app.jar 실행
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=$PORT -jar app.jar"]
