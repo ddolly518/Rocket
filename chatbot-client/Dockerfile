@@ -8,6 +8,7 @@ RUN npm run build
 # production
 FROM node:20-alpine
 WORKDIR /app
+RUN npm install -g serve
 COPY --from=build /app/dist ./dist
-EXPOSE 4173
-CMD ["sh", "-c", "npx vite preview --port $PORT --host"]
+
+CMD ["sh", "-c", "serve -s dist -l $PORT"]
