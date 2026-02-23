@@ -4,8 +4,8 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+    host: ${REDISHOST}
+    port: ${REDISPORT}
 
   jpa:
     hibernate:
