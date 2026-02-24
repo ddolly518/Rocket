@@ -16,7 +16,7 @@ import Invisible from "../../assets/Invisible.png";
 import "./SignUp.css";
 
 export const SignUp = () => {
-    const [userType, setUserType] = useState("");
+    const [type, setType] = useState("");
     const [email, setEmail] = useState("");
     const [nickname, setNickname] = useState("");
     const [password, setPassword] = useState("");
@@ -25,14 +25,15 @@ export const SignUp = () => {
     const handleSignUp = async () => {
         try {
             const response = await api.post("/auth/signup", {
-                userType,
                 email,
                 password,
-                confirmPassword
+                confirmPassword,
+                nickname,
+                type
             });
 
             console.log("회원가입 성공:", response.data);
-            window.location.href = "/";
+            window.location.href = "/login";
         } catch (err) {
             console.error("회원가입 실패:", err.response?.data || err.message);
         }
@@ -72,8 +73,8 @@ export const SignUp = () => {
                 <div className="text-wrapper-5">Sign Up</div>
             
                 <UserTypeToggle
-                    value={userType}
-                    onChange={setUserType}
+                    value={type}
+                    onChange={setType}
                 />
 
                 <Group

@@ -7,9 +7,6 @@ spring:
   jpa:
     # JPA 세션을 컨트롤러 이후에 닫음
     open-in-view: false
-  redis:
-    host: localhost
-    port: 6379
 
 openai:
   api-key: ${OPENAI_API_KEY}
@@ -17,10 +14,14 @@ openai:
   model: gpt-3.5-turbo
 
 jwt:
-  secret: ${SECRET_KEY:this-is-a-very-long-secret-key-for-jwt-hs256-123456}
+  secret: ${SECRET_KEY}
   access-token-validity: ${ACCESS_TOKEN_VALIDITY:3600000}
   refresh-token-validity: ${REFRESH_TOKEN_VALIDITY:604800000}
 
+frontend:
+  url: ${FRONTEND_URL}
+
 # 서버 포트
 server:
-  port: 8080
+  port: ${PORT:8080}
+  address: 0.0.0.0
