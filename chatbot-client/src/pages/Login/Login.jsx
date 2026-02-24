@@ -26,7 +26,7 @@ export const Login = () => {
             });
 
             console.log("로그인 성공:", response.data);
-            window.location.href = "/";
+            window.location.href = "/main";
         } catch (err) {
             console.error("로그인 실패:", err.response?.data || err.message);
         }

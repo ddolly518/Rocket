@@ -9,7 +9,7 @@ export const Logout = () => {
     try {
       const response = await api.post("/auth/logout");
       console.log("로그아웃 성공:", response.data);
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (err) {
       console.error("로그아웃 실패:", err.response?.data || err.message);
     }
