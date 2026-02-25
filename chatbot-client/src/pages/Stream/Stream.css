@@ -131,6 +131,7 @@
     letter-spacing: 0;
     line-height: normal;
     width: 99px;
+    white-space: nowrap;
 }
 
 .stream .group-15 {

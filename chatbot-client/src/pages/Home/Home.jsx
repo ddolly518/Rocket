@@ -42,6 +42,10 @@ export const Home = () => {
     window.location.href = "/stream";
   };
 
+  const handleRepairs = async () => {
+    window.location.href = "/repairs";
+  };
+
   return (
     <div className="home">
       <GroupWrapper
@@ -55,6 +59,20 @@ export const Home = () => {
         rectangleClassName="group-14-instance"
         text="메시지 전송"
         onClick={handleChat}
+      />
+
+      <GroupWrapper
+        className="group-14"
+        rectangleClassName="group-14-instance"
+        text="스트리밍 메시지 전송"
+        onClick={handleStream}
+      />
+
+      <GroupWrapper
+        className="group-14"
+        rectangleClassName="group-14-instance"
+        text="수리 접수 채팅 메시지 전송"
+        onClick={handleRepair}
       />
 
       <GroupWrapper
@@ -81,22 +99,15 @@ export const Home = () => {
       <GroupWrapper
         className="group-14"
         rectangleClassName="group-14-instance"
+        text="수리접수 목록 조회"
+        onClick={handleRepairs}
+      />
+
+      <GroupWrapper
+        className="group-14"
+        rectangleClassName="group-14-instance"
         text="대화 삭제"
         onClick={handleDelete}
-      />
-
-      <GroupWrapper
-        className="group-14"
-        rectangleClassName="group-14-instance"
-        text="수리 접수 채팅 메시지 전송"
-        onClick={handleRepair}
-      />
-
-      <GroupWrapper
-        className="group-14"
-        rectangleClassName="group-14-instance"
-        text="스트리밍 메시지 전송"
-        onClick={handleStream}
       />
     </div>
   );

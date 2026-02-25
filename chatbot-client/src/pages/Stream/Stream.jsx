@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
 import { useState } from "react";
 
@@ -15,6 +15,8 @@ export const Stream = () => {
   const [conversationId, setConversationId] = useState("");
   const [userText, setUserText] = useState("");
   const [aiText, setAiText] = useState("");
+
+  const navigate = useNavigate();
 
   const handleChat = async () => {
     if (!message.trim()) return;
@@ -43,7 +45,7 @@ export const Stream = () => {
 
   return (
     <div className="stream" data-model-id="858:453">
-      <img className="image" alt="Image" src={Logo} />
+      <img className="image" alt="Image" src={Logo} onClick={() => navigate("/main")} style={{cursor: "pointer"}} />
 
       <div className="group-3">
         <div className="group-4">

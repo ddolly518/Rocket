@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
+
+import Logo from "../../assets/logo.png";
 
 import "./Messages.css";
 
@@ -7,6 +10,8 @@ export const Messages = () => {
   const [inputId, setInputId] = useState("");
   const [messages, setMessages] = useState([]);
 
+  const navigate = useNavigate();
+  
   const fetchMessages = async () => {
     if (inputId.trim() === "") return;
 
@@ -28,6 +33,8 @@ export const Messages = () => {
 
   return (
     <div className="messages">
+      <img className="image" alt="Image" src={Logo} onClick={() => navigate("/main")} style={{cursor: "pointer"}}/>
+      
       <h2>대화 메시지 조회</h2>
 
       <div className="input-section">

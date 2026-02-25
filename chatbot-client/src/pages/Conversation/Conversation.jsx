@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
+
+import Logo from "../../assets/logo.png";
 
 import "./Conversation.css";
 
 export const Conversation = () => {
   const [inputId, setInputId] = useState("");
   const [conversation, setConversation] = useState(null);
+
+  const navigate = useNavigate();
 
   const fetchConversation = async () => {
     if (inputId.trim() === "") return;
@@ -22,7 +27,9 @@ export const Conversation = () => {
   };
 
   return (
-    <div className="conversation-detail">
+    <div className="conversation">
+      <img className="image" alt="Image" src={Logo} onClick={() => navigate("/main")} style={{cursor: "pointer"}}/>
+
       <h2>대화 상세 조회</h2>
 
       <div className="input-section">

@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
+
+import Logo from "../../assets/logo.png";
 
 import "./Delete.css";
 
 export const Delete = () => {
   const [inputId, setInputId] = useState("");
   const [message, setMessage] = useState(null); // 성공/실패 메시지
+
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     if (inputId.trim() === "") return;
@@ -29,6 +34,8 @@ export const Delete = () => {
 
   return (
     <div className="delete">
+      <img className="image" alt="Image" src={Logo} onClick={() => navigate("/main")} style={{cursor: "pointer"}}/>
+      
       <h2>대화 삭제</h2>
 
       <div className="input-section">
