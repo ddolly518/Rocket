@@ -1,11 +1,11 @@
-.chat {
+.stream {
     background-color: #ffffff;
     display: flex;
     width: 100%;
     min-height: 100%;
 }
 
-.chat .image {
+.stream .image {
     height: 41px;
     margin-left: 42px;
     margin-top: 31px;
@@ -13,7 +13,7 @@
     width: 100px;
 }
 
-.chat .group-3 {
+.stream .group-3 {
     height: 606px;
     margin-left: 210px;
     margin-top: 294px;
@@ -21,7 +21,7 @@
     width: 629px;
 }
 
-.chat .group-4 {
+.stream .group-4 {
     display: flex;
     flex-direction: column;
     gap: 48.4px;
@@ -32,7 +32,7 @@
     width: 396px;
 }
 
-.chat .group-5 {
+.stream .group-5 {
     display: flex;
     flex-direction: column;
     gap: 4.6px;
@@ -41,7 +41,7 @@
     text-align: left;
 }
 
-.chat .text-wrapper-2 {
+.stream .text-wrapper-2 {
     color: #000000;
     font-family: "Poppins", Helvetica;
     font-size: 50px;
@@ -52,7 +52,7 @@
     width: 234px;
 }
 
-.chat .text-wrapper-3 {
+.stream .text-wrapper-3 {
     color: #000000;
     font-family: "Poppins", Helvetica;
     font-size: 35px;
@@ -64,7 +64,7 @@
     width: 396px;
 }
 
-.chat .group-6 {
+.stream .group-6 {
     display: flex;
     flex-direction: column;
     gap: 0px;
@@ -73,7 +73,7 @@
     text-align: left;
 }
 
-.chat .p {
+.stream .p {
     color: #000000;
     font-family: "Poppins", Helvetica;
     font-size: 16px;
@@ -84,7 +84,7 @@
     width: 308px;
 }
 
-.chat .you-can-register {
+.stream .you-can-register {
     color: transparent;
     font-family: "Poppins", Helvetica;
     font-size: 16px;
@@ -96,16 +96,16 @@
     width: 308px;
 }
 
-.chat .span {
+.stream .span {
     color: #000000;
 }
 
-.chat .text-wrapper-4 {
+.stream .text-wrapper-4 {
     color: #5bb5a2;
     font-weight: 600;
 }
 
-.chat .saly {
+.stream .saly {
     height: 507px;
     left: 316px;
     position: absolute;
@@ -113,7 +113,7 @@
     width: 313px;
 }
 
-.chat .group-7 {
+.stream .group-7 {
     display: flex;
     flex-direction: column;
     height: 543.12px;
@@ -122,7 +122,7 @@
     width: 374px;
 }
 
-.chat .text-wrapper-5 {
+.stream .text-wrapper-5 {
     color: #000000;
     font-family: "Poppins", Helvetica;
     font-size: 30px;
@@ -133,22 +133,22 @@
     width: 99px;
 }
 
-.chat .group-15 {
+.stream .group-15 {
     margin-top: 28px !important;
     position: unset !important;
     top: unset !important;
 }
 
-.chat .group-instance {
+.stream .group-instance {
     background-color: #5bb5a226 !important;
 }
 
-.chat .group-15-instance {
+.stream .group-15-instance {
     color: #5bb5a2 !important;
     width: 22.64% !important;
 }
 
-.chat .group-8 {
+.stream .group-8 {
     display: flex;
     flex-direction: column;
     gap: 17px;
@@ -157,13 +157,13 @@
     width: 372px;
 }
 
-.chat .group-9 {
+.stream .group-9 {
     height: 62px;
     position: relative;
     width: 369px;
 }
 
-.chat .group-10 {
+.stream .group-10 {
     height: 62px;
     left: 0;
     position: absolute;
@@ -171,7 +171,7 @@
     width: 371px;
 }
 
-.chat .rectangle-3 {
+.stream .rectangle-3 {
     background-color: #5bb5a226;
     border-radius: 8px;
     height: 62px;
@@ -181,7 +181,7 @@
     width: 369px;
 }
 
-.chat .text-wrapper-6 {
+.stream .text-wrapper-6 {
     color: #5bb5a2;
     font-family: "Poppins", Helvetica;
     font-size: 15px;
@@ -198,7 +198,7 @@
     color: #5bb5a2;
 }
 
-.chat .invisible {
+.stream .invisible {
     height: 17px;
     left: 320px;
     position: absolute;
@@ -206,7 +206,7 @@
     width: 23px;
 }
 
-.chat .text-wrapper-7 {
+.stream .text-wrapper-7 {
     color: #b0b0b0;
     font-family: "Poppins", Helvetica;
     font-size: 13px;
@@ -218,17 +218,17 @@
     width: 120px;
 }
 
-.chat .group-14 {
+.stream .group-14 {
     margin-top: 46px !important;
     position: unset !important;
     top: unset !important;
 }
 
-.chat .group-14-instance {
+.stream .group-14-instance {
     background-color: #5bb5a2 !important;
 }
 
-.chat .text-wrapper-8 {
+.stream .text-wrapper-8 {
     color: #b4b4b4;
     font-family: "Poppins", Helvetica;
     font-size: 16px;
@@ -241,30 +241,30 @@
     width: 130px;
 }
 
-.chat .group-11 {
+.stream .group-11 {
     display: flex;
     margin-left: 102px;
     margin-top: 45px;
     width: 165px;
 }
 
-.chat .group-12 {
+.stream .group-12 {
     display: flex;
     height: 43.12px;
     position: relative;
     width: 165px;
 }
 
-.chat .facebook-instance {
+.stream .facebook-instance {
     top: 2px !important;
 }
 
-.chat .apple-instance {
+.stream .apple-instance {
     height: 96.15% !important;
     left: 37.69% !important;
     width: 25.13% !important;
 }
 
-.chat .google-instance {
+.stream .google-instance {
     left: 124px !important;
 }

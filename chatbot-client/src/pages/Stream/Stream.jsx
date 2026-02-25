@@ -8,9 +8,9 @@ import { GroupWrapper } from "../../components/GroupWrapper/GroupWrapper";
 import Logo from "../../assets/logo.png";
 import Saly from "../../assets/saly.png";
 
-import "./Chat.css";
+import "./Stream.css";
 
-export const Chat = () => {
+export const Stream = () => {
   const [message, setMessage] = useState("");
   const [conversationId, setConversationId] = useState(null);
   const [userText, setUserText] = useState("");
@@ -20,7 +20,7 @@ export const Chat = () => {
     if (!message.trim()) return;
 
     try {
-      const response = await api.post("/chat/completions", {
+      const response = await api.post("/chat/completions/stream", {
         conversationId: conversationId
           ? Number(conversationId) // 문자열 → 숫자 변환
           : null,
@@ -42,7 +42,7 @@ export const Chat = () => {
   };
 
   return (
-    <div className="chat" data-model-id="858:453">
+    <div className="stream" data-model-id="858:453">
       <img className="image" alt="Image" src={Logo} />
 
       <div className="group-3">
@@ -95,4 +95,4 @@ export const Chat = () => {
   );
 };
 
-export default Chat;
+export default Stream;

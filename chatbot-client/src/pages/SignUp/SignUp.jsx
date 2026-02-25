@@ -58,6 +58,7 @@ export const SignUp = () => {
                         <p className="p">If you already have an account</p>
                         <p className="you-can-register">
                             <span className="span">You can&nbsp;&nbsp; </span>
+                            <Link to="/" className="text-wrapper-4">Login here !</Link>
                         </p>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
     margin-top: 46px !important;
     position: unset !important;
     top: unset !important;
+    white-space: nowrap;
 }
 
 .home .group-14-instance {
