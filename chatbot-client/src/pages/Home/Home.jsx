@@ -1,10 +1,17 @@
 import { GroupWrapper } from "../../components/GroupWrapper/GroupWrapper";
+import api from "../../api/axiosInstance";
 
 import "./Home.css";
 
 export const Home = () => {
   const handleLogout = async () => {
-    window.location.href = "/logout";
+    try {
+      const response = await api.post("/auth/logout");
+      console.log("로그아웃 성공:", response.data);
+      window.location.href = "/";
+    } catch (err) {
+      console.error("로그아웃 실패:", err.response?.data || err.message);
+    }
   };
 
   const handleChat = async () => {

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
-import Logout from "./pages/Logout/Logout";
 import Home from "./pages/Home/Home";
 import Chat from "./pages/Chat/Chat";
 import Conversations from "./pages/Conversations/Conversations";
@@ -21,7 +20,6 @@ function App() {
         <Route path="/" element={<Navigate to="/login" replace />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp />}/>
-        <Route path="/logout" element={<Logout />}/>
 
         <Route path="/main" element={<Home />}/>
         <Route path="/chat/completions" element={<Chat />}/>

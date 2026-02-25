@@ -12,7 +12,7 @@ import "./Chat.css";
 
 export const Chat = () => {
   const [message, setMessage] = useState("");
-  const [conversationId, setConversationId] = useState(null);
+  const [conversationId, setConversationId] = useState("");
   const [userText, setUserText] = useState("");
   const [aiText, setAiText] = useState("");
 
@@ -21,7 +21,7 @@ export const Chat = () => {
 
     try {
       const response = await api.post("/chat/completions", {
-        conversationId: conversationId
+        conversationId: conversationId.trim()
           ? Number(conversationId) // 문자열 → 숫자 변환
           : null,
         message,
