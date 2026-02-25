@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RepairServiceImpl implements RepairService {
@@ -32,6 +34,17 @@ public class RepairServiceImpl implements RepairService {
 
         Repair saved = repairRepository.save(repair);
 
-        return new RepairResponse(saved.getId(), saved.getProduct().getLabel());
+        return new RepairResponse(saved.getId(), saved.getCreatedAt(), saved.getIssue(), saved.getProduct().getLabel(), saved.getStatus().getLabel());
+    }
+
+    @Override
+    public List<RepairResponse> getAllRepairs() {
+
+        User currentUser = userService.getCurrentUser();
+
+        List<Repair> repairs = repairRepository.findByUserId(currentUser.getId());
+        return repairs.stream()
+                .map(RepairResponse::from)
+                .toList();
     }
 }
