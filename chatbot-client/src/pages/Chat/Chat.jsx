@@ -32,7 +32,7 @@ export const Chat = () => {
       console.log("채팅 메시지 전송 성공:", response.data);
 
       setUserText(message);
-      const aiResponse = response.data.data.content || "응답이 없습니다."; 
+      const aiResponse = response.data.data.content; 
       setAiText(aiResponse);
       setMessage("");
     } catch (err) {
