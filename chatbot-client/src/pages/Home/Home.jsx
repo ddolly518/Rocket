@@ -37,11 +37,7 @@ export const Home = () => {
   const handleRepair = async () => {
     window.location.href = "/repair";
   };
-
-  const handleStream = async () => {
-    window.location.href = "/stream";
-  };
-
+  
   const handleRepairs = async () => {
     window.location.href = "/repairs";
   };
@@ -59,13 +55,6 @@ export const Home = () => {
         rectangleClassName="group-14-instance"
         text="메시지 전송"
         onClick={handleChat}
-      />
-
-      <GroupWrapper
-        className="group-14"
-        rectangleClassName="group-14-instance"
-        text="스트리밍 메시지 전송"
-        onClick={handleStream}
       />
 
       <GroupWrapper
