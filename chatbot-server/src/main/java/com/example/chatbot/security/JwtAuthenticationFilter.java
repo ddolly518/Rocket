@@ -32,7 +32,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/auth/signup",
             "/api/auth/login",
             "/api/auth/reissue",
-            "/chat/completions/stream",
             // Public resources & docs
             "/swagger-ui", "/v3/api-docs",
             "/webjars"

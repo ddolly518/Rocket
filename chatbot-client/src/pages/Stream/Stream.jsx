@@ -21,7 +21,7 @@ export const Stream = () => {
     if (!message.trim()) return;
 
     // 사용자 메시지 기록
-    setConversation(prev => [...prev, { role: "user", content: message }]);
+    setConversation((prev) => [...prev, { role: "user", content: message }]);
 
     // 기존 EventSource 종료
     if (eventSourceRef.current) {
@@ -31,19 +31,20 @@ export const Stream = () => {
     // GET 파라미터 생성
     const params = new URLSearchParams({
       message,
-      conversationId: conversationId.trim() ? conversationId : undefined
+      conversationId: conversationId.trim() ? conversationId : undefined,
     });
 
     // SSE 요청 (Vite proxy 활용)
     eventSourceRef.current = new EventSource(
-      `/api/chat/completions/stream?${params.toString()}`
+      "https://rocket-server-production.up.railway.app/chat/completions/stream?" +
+        params.toString(),
     );
 
     // SSE 메시지 수신
     eventSourceRef.current.onmessage = (event) => {
       if (!event.data) return;
 
-      setConversation(prev => {
+      setConversation((prev) => {
         const last = prev[prev.length - 1];
         // 마지막 메시지가 AI가 아니면 새 메시지 추가
         if (!last || last.role !== "assistant") {
