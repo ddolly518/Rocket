@@ -61,10 +61,6 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
 
-        System.out.println("Login attempt: " + request.email());
-        System.out.println("User found: " + user);
-        System.out.println("Password match: " + passwordEncoder.matches(request.password(), user.getPassword()));
-        
         // 비밀번호 검증
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
@@ -75,8 +71,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = tokenProvider.createRefreshToken(user.getEmail());
 
         // Redis에 refreshToken 저장
-        ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
+        //ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        //ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
 
         // 쿠키 설정
         httpResponse.addCookie(createAccessTokenCookie(accessToken));
