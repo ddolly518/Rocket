@@ -87,7 +87,7 @@ public class AuthServiceImpl implements AuthService {
         cookie.setSecure(true); // https 환경
         cookie.setPath("/");
         cookie.setMaxAge((int) (tokenProvider.getAccessTokenValidity() / 1000)); // 1시간
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "None");
         return cookie;
     }
 
@@ -95,9 +95,9 @@ public class AuthServiceImpl implements AuthService {
         Cookie cookie = new Cookie("refreshToken", token);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
-        cookie.setPath("/auth/refresh");
+        cookie.setPath("/");
         cookie.setMaxAge((int) (tokenProvider.getRefreshTokenValidity() / 1000)); // 7일
-        cookie.setAttribute("SameSite", "Strict");
+        cookie.setAttribute("SameSite", "None");
         return cookie;
     }
 
