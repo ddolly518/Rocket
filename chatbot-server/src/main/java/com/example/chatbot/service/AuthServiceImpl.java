@@ -61,6 +61,10 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
 
+        System.out.println("Login attempt: " + request.email());
+        System.out.println("User found: " + user);
+        System.out.println("Password match: " + passwordEncoder.matches(request.password(), user.getPassword()));
+        
         // 비밀번호 검증
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new CustomException(CustomErrorCode.PASSWORD_NOT_MATCH);
