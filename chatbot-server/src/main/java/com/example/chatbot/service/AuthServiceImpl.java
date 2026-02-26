@@ -155,7 +155,7 @@ public class AuthServiceImpl implements AuthService {
         accessToken.setSecure(true); // https 환경이면 true
         accessToken.setPath("/");
         accessToken.setMaxAge(0); // 만료시간 0으로 설정 → 삭제
-        accessToken.setAttribute("SameSite", "Strict");
+        accessToken.setAttribute("SameSite", "None");
 
         // refreshToken 쿠키 삭제
         Cookie refreshToken = new Cookie("refreshToken", null);
@@ -163,7 +163,7 @@ public class AuthServiceImpl implements AuthService {
         refreshToken.setSecure(true);
         refreshToken.setPath("/auth/refresh");
         refreshToken.setMaxAge(0);
-        refreshToken.setAttribute("SameSite", "Strict");
+        refreshToken.setAttribute("SameSite", "None");
 
         response.addCookie(accessToken);
         response.addCookie(refreshToken);
