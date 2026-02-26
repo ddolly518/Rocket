@@ -70,7 +70,6 @@ public class AuthServiceImpl implements AuthService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
         // 회원 조회
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
