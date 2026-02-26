@@ -12,7 +12,7 @@ import qs from 'qs';
 
 // 공통 설정을 가진 axios 객체 생성
 const api = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api`,// 모든 요청은 자동으로 /api로 시작
+    baseURL: 'https://rocket-server-production.up.railway.app/api', // 모든 요청은 자동으로 /api로 시작
     withCredentials: true,       // 쿠키 필요 시
     // 기본 headers에서 'Content-Type' 제거!
     paramsSerializer: params =>
