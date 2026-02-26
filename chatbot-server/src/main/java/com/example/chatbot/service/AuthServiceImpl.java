@@ -71,8 +71,8 @@ public class AuthServiceImpl implements AuthService {
         String refreshToken = tokenProvider.createRefreshToken(user.getEmail());
 
         // Redis에 refreshToken 저장
-        //ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        //ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
+        ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
 
         // 쿠키 설정
         httpResponse.addCookie(createAccessTokenCookie(accessToken));
