@@ -56,7 +56,8 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/api/auth/signup",
                                 "/api/auth/login",
-                                "/api/auth/reissue"
+                                "/api/auth/reissue",
+                                "/chat/completions/stream"
                         ).permitAll() // 로그인 없이 누구나 접근 가능
                         .anyRequest().authenticated() // 나머지 전부 인증 필요
                 )
