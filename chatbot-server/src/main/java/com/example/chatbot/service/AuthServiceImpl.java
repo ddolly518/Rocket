@@ -57,6 +57,20 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse login(LoginRequest request, HttpServletResponse httpResponse) {
+        // 환경변수 확인
+        System.out.println("REDISHOST = " + System.getenv("REDISHOST"));
+        System.out.println("REDISPORT = " + System.getenv("REDISPORT"));
+        System.out.println("REDISPASSWORD = " + System.getenv("REDISPASSWORD"));
+
+        // RedisTemplate이 연결 가능한지 확인
+        try {
+            System.out.println("Redis Connection Factory: " + redisTemplate.getConnectionFactory());
+            String pong = redisTemplate.getConnectionFactory().getConnection().ping();
+            System.out.println("Redis PING response: " + pong);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         // 회원 조회
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new CustomException(CustomErrorCode.USER_NOT_EXIST));
