@@ -27,7 +27,7 @@ public class Conversation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "title", length = 255, nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT")

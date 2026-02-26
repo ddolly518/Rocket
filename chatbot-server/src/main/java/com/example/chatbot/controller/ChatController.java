@@ -80,6 +80,7 @@ public class ChatController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    @Operation(summary = "스트리밍 메시지 전송", description = "사용자 스트리밍 메시지를 전송하고 AI 응답을 받습니다.")
     @GetMapping(value = "/chat/completions/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> chatStream(@RequestParam String message,
                                    @RequestParam(required = false) Long conversationId) {

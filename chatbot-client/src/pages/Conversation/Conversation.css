@@ -1,0 +1,7 @@
+.conversation .image {
+    height: 41px;
+    margin-left: 42px;
+    margin-top: 31px;
+    object-fit: cover;
+    width: 100px;
+}

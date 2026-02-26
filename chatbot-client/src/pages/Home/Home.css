@@ -1,9 +1,10 @@
-.logout .group-14 {
+.home .group-14 {
     margin-top: 46px !important;
     position: unset !important;
     top: unset !important;
+    white-space: nowrap;
 }
 
-.logout .group-14-instance {
+.home .group-14-instance {
     background-color: #5bb5a2 !important;
 }
