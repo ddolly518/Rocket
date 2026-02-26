@@ -10,8 +10,6 @@ spring:
     port: ${REDISPORT}
     password: ${REDISPASSWORD}
     ssl: false
-    lettuce:
-      shutdown-timeout: 100ms
 
   jpa:
     hibernate:

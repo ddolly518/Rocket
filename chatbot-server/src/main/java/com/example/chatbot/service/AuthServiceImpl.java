@@ -72,7 +72,6 @@ public class AuthServiceImpl implements AuthService {
 
         // Redis에 refreshToken 저장
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        ops.set("test-key", "123");
         ops.set("refreshToken:"+user.getEmail(), refreshToken, Duration.ofMillis(tokenProvider.getRefreshTokenValidity()));
 
         // 쿠키 설정
@@ -88,7 +87,7 @@ public class AuthServiceImpl implements AuthService {
         cookie.setSecure(true); // https 환경
         cookie.setPath("/");
         cookie.setMaxAge((int) (tokenProvider.getAccessTokenValidity() / 1000)); // 1시간
-        cookie.setAttribute("SameSite", "None");
+        cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
 
@@ -98,7 +97,7 @@ public class AuthServiceImpl implements AuthService {
         cookie.setSecure(true);
         cookie.setPath("/auth/refresh");
         cookie.setMaxAge((int) (tokenProvider.getRefreshTokenValidity() / 1000)); // 7일
-        cookie.setAttribute("SameSite", "None");
+        cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
 
