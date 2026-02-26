@@ -9,7 +9,6 @@ import Conversations from "./pages/Conversations/Conversations";
 import Conversation from "./pages/Conversation/Conversation";
 import Messages from "./pages/Messages/Messages";
 import Delete from "./pages/Delete/Delete";
-import Stream from "./pages/Stream/Stream";
 import Repair from "./pages/Repair/Repair";
 import Repairs from "./pages/Repairs/Repairs";
 
@@ -29,7 +28,6 @@ function App() {
         <Route path="/conversation" element={<Conversation />}/>
         <Route path="/messages" element={<Messages />}/>
         <Route path="/delete" element={<Delete />}/>
-        <Route path="/stream" element={<Stream />}/>
         <Route path="/repair" element={<Repair />}/>
         <Route path="/repairs" element={<Repairs />}/>
       </Routes>
