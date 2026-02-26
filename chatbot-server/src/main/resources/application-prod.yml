@@ -9,7 +9,7 @@ spring:
     host: ${REDISHOST}
     port: ${REDISPORT}
     password: ${REDISPASSWORD}
-    ssl: true
+    ssl: false
     lettuce:
       shutdown-timeout: 100ms
 
