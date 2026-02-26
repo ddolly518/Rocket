@@ -52,6 +52,18 @@ dependencies {
 
     // Swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1'
+
+    // OpenAI 호출용 (WebClient)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // 대화 컨텍스트 관리
+    implementation 'com.knuddels:jtokkit:1.1.0'
+
+    // Rate Limiting
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:8.0.1'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {

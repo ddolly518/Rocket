@@ -1,0 +1,38 @@
+.group-wrapper {
+    display: flex;
+    height: 59px;
+    position: relative;
+    top: 318px;
+    width: 369px;
+}
+
+.group-wrapper .group-2 {
+    flex: 1;
+    position: relative;
+    width: 371px;
+}
+
+.group-wrapper .rectangle-2 {
+    background-color: #4d47c3;
+    border-radius: 9px;
+    box-shadow: 0px 4px 61px #4d47c366;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 99.46%;
+}
+
+.group-wrapper .text-wrapper {
+    color: #ffffff;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 40.68%;
+    left: 40%;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 35%;
+    width: 11.59%;
+}

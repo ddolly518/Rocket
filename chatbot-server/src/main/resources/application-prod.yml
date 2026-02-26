@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL_JDBC}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  redis:
+    host: ${REDISHOST}
+    port: ${REDISPORT}
+    password: ${REDISPASSWORD}
+    ssl: false
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
