@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "repair")
-@Table(name = "repair")
+@Entity(name = "repairs")
+@Table(name = "repairs")
 @EntityListeners(AuditingEntityListener.class)
 public class Repair {
     @Id
@@ -35,7 +35,7 @@ public class Repair {
     @Column(nullable = false)
     private RepairProduct product;
 
-    @Column(name = "issue", length = 255, nullable = false)
+    @Column(name = "issue", columnDefinition = "TEXT", nullable = false)
     private String issue;
 
     @CreationTimestamp

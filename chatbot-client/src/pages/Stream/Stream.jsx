@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../api/axiosInstance";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { Group } from "../../components/Group/Group";
 import { GroupWrapper } from "../../components/GroupWrapper/GroupWrapper";
@@ -13,45 +12,80 @@ import "./Stream.css";
 export const Stream = () => {
   const [message, setMessage] = useState("");
   const [conversationId, setConversationId] = useState("");
-  const [userText, setUserText] = useState("");
-  const [aiText, setAiText] = useState("");
+  const [conversation, setConversation] = useState([]); // 사용자+AI 메시지 배열
 
+  const eventSourceRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleChat = async () => {
+  const handleChat = () => {
     if (!message.trim()) return;
 
-    try {
-      const response = await api.post("/chat/completions/stream", {
-        conversationId: conversationId.trim()
-          ? Number(conversationId) // 문자열 → 숫자 변환
-          : null,
-        message,
-      });
+    // 사용자 메시지 기록
+    setConversation(prev => [...prev, { role: "user", content: message }]);
 
-      console.log("채팅 메시지 전송 성공:", response.data);
-
-      setUserText(message);
-      const aiResponse = response.data.data.content; 
-      setAiText(aiResponse);
-      setMessage("");
-    } catch (err) {
-      console.error(
-        "채팅 메시지 전송 실패:",
-        err.response?.data || err.message,
-      );
+    // 기존 EventSource 종료
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
     }
+
+    // GET 파라미터 생성
+    const params = new URLSearchParams({
+      message,
+      conversationId: conversationId.trim() ? conversationId : undefined
+    });
+
+    // SSE 요청 (Vite proxy 활용)
+    eventSourceRef.current = new EventSource(
+      `/api/chat/completions/stream?${params.toString()}`
+    );
+
+    // SSE 메시지 수신
+    eventSourceRef.current.onmessage = (event) => {
+      if (!event.data) return;
+
+      setConversation(prev => {
+        const last = prev[prev.length - 1];
+        // 마지막 메시지가 AI가 아니면 새 메시지 추가
+        if (!last || last.role !== "assistant") {
+          return [...prev, { role: "assistant", content: event.data }];
+        }
+        // 마지막 AI 메시지에 이어 붙이기
+        const updated = [...prev];
+        updated[updated.length - 1].content += event.data;
+        return updated;
+      });
+    };
+
+    // SSE 에러 처리
+    eventSourceRef.current.onerror = (err) => {
+      console.error("SSE error:", err);
+      eventSourceRef.current.close();
+    };
+
+    // 입력 초기화
+    setMessage("");
   };
 
   return (
     <div className="stream" data-model-id="858:453">
-      <img className="image" alt="Image" src={Logo} onClick={() => navigate("/main")} style={{cursor: "pointer"}} />
+      <img
+        className="image"
+        alt="Logo"
+        src={Logo}
+        onClick={() => navigate("/main")}
+        style={{ cursor: "pointer" }}
+      />
 
       <div className="group-3">
         <div className="group-4">
           <div className="group-5">
-            <div className="text-wrapper-2">{userText}</div>
-            <div className="text-wrapper-3">{aiText}</div>
+            {conversation.map((msg, idx) => (
+              <div key={idx}>
+                <div className="text-wrapper-2">
+                  {msg.role === "user" ? "You: " : "AI: "} {msg.content}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -66,7 +100,7 @@ export const Stream = () => {
             <div className="group-10">
               <div className="rectangle-3" />
               <input
-                type="conversationId"
+                type="text"
                 placeholder="ConversationId"
                 value={conversationId}
                 onChange={(e) => setConversationId(e.target.value)}

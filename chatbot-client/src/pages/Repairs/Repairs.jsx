@@ -14,7 +14,7 @@ export const Repairs = () => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const response = await api.get("/repair");
+        const response = await api.get("/as/repair");
         setConversations(response.data.data);
       } catch (err) {
         console.error(
