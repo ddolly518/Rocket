@@ -56,7 +56,7 @@
 ## 🗣️ 프로젝트 발표 영상 & 발표 문서
 
 > ### 🗓️ 2026.02.02 - 2026.02.27
-> ### [📑 발표 PPT 링크](https://drive.google.com/file/d/189O8xDXAeFTVPkY2u5BA97VVASF8x5qQ/view?usp=sharing)
+> ### [📑 발표 PPT 링크](https://drive.google.com/file/d/1jNI_WZJVrthTRUlOmzV3mFOgEG7TM89g/view?usp=sharing)
 > ### [📑 시연 영상 링크](https://drive.google.com/file/d/1mv1P67s9GKKUvJVR8UmfvtEYeRgbDm5R/view?usp=sharing)
 
 ---
@@ -126,10 +126,8 @@
 > - 화살표 함수 사용
 
 ## :clipboard: Documents
-> [📜 API 명세서](https://drive.google.com/file/d/1VH5oC8MFKSEarmj2d_eHJL5Icms8dmsS/view?usp=drive_link)
+> [📜 API 명세서](https://drive.google.com/file/d/17iNbOUqZdF7EafdaAAcDW2jBWqf-lUxW/view?usp=sharing)
 >
-> [📜 요구사항 정의서](https://drive.google.com/file/d/18s4sGzEGSrEV-ZW630Z5Q3S5_eNCvL2r/view?usp=drive_link)
+> [📜 요구사항 정의서](https://drive.google.com/file/d/16AGwz_TPQuQmtvbpF-9Kqioh-ZfsTAr9/view?usp=sharing)
 >
-> [📜 ERD](https://www.erdcloud.com/d/3gSWctyeNQzkj2T34)
->
-> [📜 테이블 명세서](https://docs.google.com/document/d/1ummW42XzfPVniaVZmWB1yjw-2XAU-Cf1/edit?usp=sharing&ouid=108605614740878450335&rtpof=true&sd=true)
+> [📜 ERD](https://drive.google.com/file/d/1m4USR1EQtoIPjALPM7rbmLQzQttkOVlk/view?usp=sharing)
