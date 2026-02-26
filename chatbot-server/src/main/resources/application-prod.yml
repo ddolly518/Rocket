@@ -8,6 +8,8 @@ spring:
   redis:
     host: ${REDISHOST}
     port: ${REDISPORT}
+    username: ${REDISUSER}
+    password: ${REDISPASSWORD}
 
   jpa:
     hibernate:
