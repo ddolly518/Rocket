@@ -1,0 +1,135 @@
+# 🛠️ **스프링부트를 활용한 A/S 서비스**
+
+## 🖥️ FixTrack
+- **A/S 접수 및 처리 플랫폼**
+
+---
+
+## 🌟 프로젝트 소개
+
+### ✅ 제작 목표
+- A/S 센터에서 발생하는 고객 요청 및 수리 처리 내역을 체계적으로 **전산화**하여 업무 효율성과 고객 응대 품질을 향상시키고 처리 이력의 통계를 확보
+
+---
+
+## ⚙️ 시스템 개발 내용
+
+- **고객**
+    - 회원가입 / 로그인 / 로그아웃
+    - A/S 접수
+    - A/S 접수 내역 조회
+    - 문의 등록
+
+- **기술 스택**
+    - 백앤드
+    	- Spring Boot
+      - Spring Security
+      - JPA
+      - JWT
+    	- Vaildation
+    	- Lombok
+      - PostgreSQL
+      - Redis
+    - 프론트
+    	- React
+      - Vite
+    	- React Router
+    	- Axios
+      - HTML/CSS/JS
+    - DevOps
+    	- Railway
+    - ETC
+      - OpenAI API 
+---
+
+## 💡 아이디어 착안
+
+- 전화, 메모, 엑셀 등으로 관리되던 A/S 업무를 체계화함으로써 누락 방지, 담당자 분배, 처리 추적 등 다양한 업무 과정을 일관된 방식으로 처리
+- 통계(접수 수, 접수 처리 현황) 자동화 요구 증가
+
+---
+## :link: 배포 링크
+
+> ### [⛪ FixTrack](https://rocket-client-production.up.railway.app)
+
+---
+## 🗣️ 프로젝트 발표 영상 & 발표 문서
+
+> ### 🗓️ 2026.02.02 - 2026.02.27
+> ### [📑 발표 PPT 링크](https://drive.google.com/file/d/189O8xDXAeFTVPkY2u5BA97VVASF8x5qQ/view?usp=sharing)
+> ### [📑 시연 영상 링크](https://drive.google.com/file/d/1mv1P67s9GKKUvJVR8UmfvtEYeRgbDm5R/view?usp=sharing)
+
+---
+
+## 🧰 사용 스택
+
+### :wrench: System Architecture
+
+<img src="https://drive.google.com/uc?export=view&id=1m5AwEd5X9whC5_3FMwR0JpDU0H_DyVmL"/>
+
+---
+
+## 📑 프로젝트 규칙
+
+### Branch Strategy
+> - main / dev 브랜치 기본 생성
+> - main과 dev로 직접 push 제한
+
+### Git Convention
+> 1. 적절한 커밋 접두사 작성
+> 2. 커밋 메시지 내용 작성
+> 3. 내용 뒤에 이슈 (#이슈 번호)와 같이 작성하여 이슈 연결
+
+> | 접두사        | 설명                           |
+> | ------------- | ------------------------------ |
+> | Feat :     | 새로운 기능 구현               |
+> | Add :      | 에셋 파일 추가                 |
+> | Fix :      | 버그 수정                      |
+> | Docs :     | 문서 추가 및 수정              |
+> | Style :    | 스타일링 작업                  |
+> | Refactor : | 코드 리팩토링 (동작 변경 없음) |
+> | Test :     | 테스트                         |
+> | Deploy :   | 배포                           |
+> | Conf :     | 빌드, 환경 설정                |
+> | Chore :    | 기타 작업                      |
+
+
+### Pull Request
+> ### Title
+> * 제목은 'feat: 홈 페이지 구현'과 같이 작성합니다.
+
+> ### PR Type
+> - [ ] FEAT: 새로운 기능 구현
+> - [ ] ADD : 에셋 파일 추가
+> - [ ] FIX: 버그 수정
+> - [ ] DOCS: 문서 추가 및 수정
+> - [ ] STYLE: 포맷팅 변경
+> - [ ] REFACTOR: 코드 리팩토링
+> - [ ] TEST: 테스트 관련
+> - [ ] DEPLOY: 배포 관련
+> - [ ] CONF: 빌드, 환경 설정
+> - [ ] CHORE: 기타 작업
+
+### Code Convention
+>BE
+> - 패키지명 전체 소문자
+> - 클래스명, 인터페이스명 CamelCase
+> - 클래스 이름 명사 사용
+> - 상수명 SNAKE_CASE
+> - Controller, Service, Dto, Repository, mapper 앞에 접미사로 통일(ex. MemberController)
+> - service 계층 메서드명 create, update, find, delete로 CRUD 통일(ex. createMember)
+> - Test 클래스는 접미사로 Test 사용(ex. memberFindTest)
+
+> FE
+> - Event handler 사용 (ex. handle ~)
+> - export방식 (ex. export default ~)
+> - 화살표 함수 사용
+
+## :clipboard: Documents
+> [📜 API 명세서](https://drive.google.com/file/d/1VH5oC8MFKSEarmj2d_eHJL5Icms8dmsS/view?usp=drive_link)
+>
+> [📜 요구사항 정의서](https://drive.google.com/file/d/18s4sGzEGSrEV-ZW630Z5Q3S5_eNCvL2r/view?usp=drive_link)
+>
+> [📜 ERD](https://www.erdcloud.com/d/3gSWctyeNQzkj2T34)
+>
+> [📜 테이블 명세서](https://docs.google.com/document/d/1ummW42XzfPVniaVZmWB1yjw-2XAU-Cf1/edit?usp=sharing&ouid=108605614740878450335&rtpof=true&sd=true)
