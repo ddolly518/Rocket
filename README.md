@@ -15,31 +15,41 @@
 ## ⚙️ 시스템 개발 내용
 
 - **고객**
-    - 회원가입 / 로그인 / 로그아웃
-    - A/S 접수
-    - A/S 접수 내역 조회
-    - 문의 등록
+    - 계정 및 인증관리
+        - 회원가입 / 로그인 / 로그아웃
+    - A/S
+        - 자연어 기반 A/S 접수
+        - 자연어 기반 고장 증상 분석 및 자동 카테고리화
+        - A/S 접수 내역 조회
+    - 고객 문의 관리
+        - AI기반 고객 문의 처리 지원
+    - OpenAI API 연동
+        - Rate Limiting
+        - 대화 컨텍스트 관리
+        - SSE기반 스트리밍 응답
+        - 비동기 처리
+        - LLM 페르소나 & 프롬프트 엔지니어링 설계
+- **관리자**
 
 - **기술 스택**
-    - 백앤드
+    - Back-End
     	- Spring Boot
       - Spring Security
       - JPA
       - JWT
-    	- Vaildation
-    	- Lombok
+      - Vaildation
+      - Lombok
       - PostgreSQL
       - Redis
-    - 프론트
+      - OpenAI API 
+    - Front-End
     	- React
-      - Vite
+        - Vite
     	- React Router
     	- Axios
-      - HTML/CSS/JS
+        - HTML/CSS/JS
     - DevOps
     	- Railway
-    - ETC
-      - OpenAI API 
 ---
 
 ## 💡 아이디어 착안
@@ -56,7 +66,7 @@
 ## 🗣️ 프로젝트 발표 영상 & 발표 문서
 
 > ### 🗓️ 2026.02.02 - 2026.02.27
-> ### [📑 발표 PPT 링크](https://drive.google.com/file/d/1jNI_WZJVrthTRUlOmzV3mFOgEG7TM89g/view?usp=sharing)
+> ### [📑 발표 PPT 링크](https://www.canva.com/design/DAHCUHP2Nuk/idcJGYsSCua3TdjQNFwMpQ/edit?utm_content=DAHCUHP2Nuk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 > ### [📑 시연 영상 링크](https://drive.google.com/file/d/1mv1P67s9GKKUvJVR8UmfvtEYeRgbDm5R/view?usp=sharing)
 
 ---
@@ -72,8 +82,8 @@
 ## 📑 프로젝트 규칙
 
 ### Branch Strategy
-> - main / dev 브랜치 기본 생성
-> - main과 dev로 직접 push 제한
+> - main / develop 브랜치 기본 생성
+> - main과 develop로 직접 push 제한
 
 ### Git Convention
 > 1. 적절한 커밋 접두사 작성
